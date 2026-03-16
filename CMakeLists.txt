@@ -12,7 +12,7 @@
 # CMake versions greater than the JSONCPP_NEWEST_VALIDATED_POLICIES_VERSION policies will
 # continue to generate policy warnings "CMake Warning (dev)...Policy CMP0XXX is not set:"
 #
-set(JSONCPP_OLDEST_VALIDATED_POLICIES_VERSION "3.8.0")
+set(JSONCPP_OLDEST_VALIDATED_POLICIES_VERSION "3.10.0")
 set(JSONCPP_NEWEST_VALIDATED_POLICIES_VERSION "3.13.2")
 cmake_minimum_required(VERSION ${JSONCPP_OLDEST_VALIDATED_POLICIES_VERSION})
 if("${CMAKE_VERSION}" VERSION_LESS "${JSONCPP_NEWEST_VALIDATED_POLICIES_VERSION}")
@@ -79,6 +79,7 @@ option(JSONCPP_WITH_STRICT_ISO "Issue all the warnings demanded by strict ISO C 
 option(JSONCPP_WITH_PKGCONFIG_SUPPORT "Generate and install .pc files" ON)
 option(JSONCPP_WITH_CMAKE_PACKAGE "Generate and install cmake package files" ON)
 option(JSONCPP_WITH_EXAMPLE "Compile JsonCpp example" OFF)
+option(JSONCPP_WITH_INSTALL "Include JsonCpp header and binaries in the install target" ON)
 option(JSONCPP_STATIC_WINDOWS_RUNTIME "Use static (MT/MTd) Windows runtime" OFF)
 option(BUILD_SHARED_LIBS "Build jsoncpp_lib as a shared library." ON)
 option(BUILD_STATIC_LIBS "Build jsoncpp_lib as a static library." ON)

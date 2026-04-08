@@ -1,5 +1,9 @@
 name: cmake
 on: [check_run, push, pull_request]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   cmake-publish:
     runs-on: ${{ matrix.os }}

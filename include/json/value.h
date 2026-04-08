@@ -501,7 +501,7 @@ public:
   /// that name.
   /// \param key may contain embedded nulls.
   const Value& operator[](std::string_view key) const;
-#else
+#endif
   /// Access an object value by name, create a null member if it does not exist.
   /// \note Because of our implementation, keys are limited to 2^30 -1 chars.
   /// Exceeding that will cause an exception.
@@ -516,7 +516,6 @@ public:
   /// that name.
   /// \param key may contain embedded nulls.
   const Value& operator[](const String& key) const;
-#endif
   /** \brief Access an object value by name, create a null member if it does not
    * exist.
    *
@@ -534,7 +533,7 @@ public:
   /// Return the member named key if it exist, defaultValue otherwise.
   /// \note deep copy
   Value get(std::string_view key, const Value& defaultValue) const;
-#else
+#endif
   /// Return the member named key if it exist, defaultValue otherwise.
   /// \note deep copy
   Value get(const char* key, const Value& defaultValue) const;
@@ -542,7 +541,6 @@ public:
   /// \note deep copy
   /// \param key may contain embedded nulls.
   Value get(const String& key, const Value& defaultValue) const;
-#endif
   /// Return the member named key if it exist, defaultValue otherwise.
   /// \note deep copy
   /// \note key may contain embedded nulls.
@@ -589,12 +587,11 @@ public:
   /// \post type() is unchanged
 #if JSONCPP_HAS_STRING_VIEW
   void removeMember(std::string_view key);
-#else
+#endif
   void removeMember(const char* key);
   /// Same as removeMember(const char*)
   /// \param key may contain embedded nulls.
   void removeMember(const String& key);
-#endif
   /** \brief Remove the named map member.
    *
    *  Update 'removed' iff removed.
@@ -603,12 +600,11 @@ public:
    */
 #if JSONCPP_HAS_STRING_VIEW
   bool removeMember(std::string_view key, Value* removed);
-#else
+#endif
   bool removeMember(String const& key, Value* removed);
   /// Same as removeMember(const char* begin, const char* end, Value* removed),
   /// but 'key' is null-terminated.
   bool removeMember(const char* key, Value* removed);
-#endif
   /// Same as removeMember(String const& key, Value* removed)
   bool removeMember(const char* begin, const char* end, Value* removed);
   /** \brief Remove the indexed array element.
@@ -623,14 +619,13 @@ public:
   /// Return true if the object has a member named key.
   /// \param key may contain embedded nulls.
   bool isMember(std::string_view key) const;
-#else
+#endif
   /// Return true if the object has a member named key.
   /// \note 'key' must be null-terminated.
   bool isMember(const char* key) const;
   /// Return true if the object has a member named key.
   /// \param key may contain embedded nulls.
   bool isMember(const String& key) const;
-#endif
   /// Same as isMember(String const& key)const
   bool isMember(const char* begin, const char* end) const;
 

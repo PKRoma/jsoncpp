@@ -1200,7 +1200,7 @@ const Value& Value::operator[](std::string_view key) const {
 Value& Value::operator[](std::string_view key) {
   return resolveReference(key.data(), key.data() + key.length());
 }
-#else
+#endif
 const Value& Value::operator[](const char* key) const {
   Value const* found = find(key, key + strlen(key));
   if (!found)
@@ -1221,7 +1221,6 @@ Value& Value::operator[](const char* key) {
 Value& Value::operator[](const String& key) {
   return resolveReference(key.data(), key.data() + key.length());
 }
-#endif
 
 Value& Value::operator[](const StaticString& key) {
   return resolveReference(key.c_str());
@@ -1265,14 +1264,13 @@ Value Value::get(char const* begin, char const* end,
 Value Value::get(std::string_view key, const Value& defaultValue) const {
   return get(key.data(), key.data() + key.length(), defaultValue);
 }
-#else
+#endif
 Value Value::get(char const* key, Value const& defaultValue) const {
   return get(key, key + strlen(key), defaultValue);
 }
 Value Value::get(String const& key, Value const& defaultValue) const {
   return get(key.data(), key.data() + key.length(), defaultValue);
 }
-#endif
 
 bool Value::removeMember(const char* begin, const char* end, Value* removed) {
   if (type() != objectValue) {
@@ -1292,14 +1290,13 @@ bool Value::removeMember(const char* begin, const char* end, Value* removed) {
 bool Value::removeMember(std::string_view key, Value* removed) {
   return removeMember(key.data(), key.data() + key.length(), removed);
 }
-#else
+#endif
 bool Value::removeMember(const char* key, Value* removed) {
   return removeMember(key, key + strlen(key), removed);
 }
 bool Value::removeMember(String const& key, Value* removed) {
   return removeMember(key.data(), key.data() + key.length(), removed);
 }
-#endif
 
 #ifdef JSONCPP_HAS_STRING_VIEW
 void Value::removeMember(std::string_view key) {
@@ -1312,7 +1309,7 @@ void Value::removeMember(std::string_view key) {
                      CZString::noDuplication);
   value_.map_->erase(actualKey);
 }
-#else
+#endif
 void Value::removeMember(const char* key) {
   JSON_ASSERT_MESSAGE(type() == nullValue || type() == objectValue,
                       "in Json::Value::removeMember(): requires objectValue");
@@ -1323,7 +1320,6 @@ void Value::removeMember(const char* key) {
   value_.map_->erase(actualKey);
 }
 void Value::removeMember(const String& key) { removeMember(key.c_str()); }
-#endif
 
 bool Value::removeIndex(ArrayIndex index, Value* removed) {
   if (type() != arrayValue) {
@@ -1357,14 +1353,13 @@ bool Value::isMember(char const* begin, char const* end) const {
 bool Value::isMember(std::string_view key) const {
   return isMember(key.data(), key.data() + key.length());
 }
-#else
+#endif
 bool Value::isMember(char const* key) const {
   return isMember(key, key + strlen(key));
 }
 bool Value::isMember(String const& key) const {
   return isMember(key.data(), key.data() + key.length());
 }
-#endif
 
 Value::Members Value::getMemberNames() const {
   JSON_ASSERT_MESSAGE(

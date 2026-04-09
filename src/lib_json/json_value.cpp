@@ -441,7 +441,6 @@ Value::Value(const String& value) {
       value.data(), static_cast<unsigned>(value.length()));
 }
 
-
 Value::Value(const StaticString& value) {
   initBasic(stringValue);
   value_.string_ = const_cast<char*>(value.c_str());
@@ -648,7 +647,6 @@ bool Value::getString(char const** begin, char const** end) const {
   *end = *begin + length;
   return true;
 }
-
 
 String Value::asString() const {
   switch (type()) {

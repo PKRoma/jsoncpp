@@ -131,9 +131,6 @@ if(BUILD_SHARED_LIBS)
 
     target_compile_features(${SHARED_LIB} PUBLIC ${REQUIRED_FEATURES})
 
-    if(JSONCPP_HAS_STRING_VIEW)
-        target_compile_definitions(${SHARED_LIB} PUBLIC JSONCPP_HAS_STRING_VIEW=1)
-    endif()
 
     target_include_directories(${SHARED_LIB} PUBLIC
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
@@ -168,9 +165,6 @@ if(BUILD_STATIC_LIBS)
 
     target_compile_features(${STATIC_LIB} PUBLIC ${REQUIRED_FEATURES})
 
-    if(JSONCPP_HAS_STRING_VIEW)
-        target_compile_definitions(${STATIC_LIB} PUBLIC JSONCPP_HAS_STRING_VIEW=1)
-    endif()
 
     target_include_directories(${STATIC_LIB} PUBLIC
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
@@ -198,9 +192,6 @@ if(BUILD_OBJECT_LIBS)
 
     target_compile_features(${OBJECT_LIB} PUBLIC ${REQUIRED_FEATURES})
 
-    if(JSONCPP_HAS_STRING_VIEW)
-        target_compile_definitions(${OBJECT_LIB} PUBLIC JSONCPP_HAS_STRING_VIEW=1)
-    endif()
 
     target_include_directories(${OBJECT_LIB} PUBLIC
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>

@@ -357,7 +357,8 @@ public:
   Value(const StaticString& value);
   Value(const String& value);
 #ifdef JSONCPP_HAS_STRING_VIEW
-  Value(std::string_view value);
+  inline Value(std::string_view value)
+      : Value(value.data(), value.data() + value.length()) {}
 #endif
   Value(bool value);
   Value(std::nullptr_t ptr) = delete;
@@ -405,7 +406,14 @@ public:
   /** Get string_view of string-value.
    *  \return false if !string. (Seg-fault if str is NULL.)
    */
-  bool getString(std::string_view* str) const;
+  inline bool getString(std::string_view* str) const {
+    char const* begin;
+    char const* end;
+    if (!getString(&begin, &end))
+      return false;
+    *str = std::string_view(begin, static_cast<size_t>(end - begin));
+    return true;
+  }
 #endif
   Int asInt() const;
   UInt asUInt() const;
@@ -496,11 +504,18 @@ public:
 #ifdef JSONCPP_HAS_STRING_VIEW
   /// Access an object value by name, create a null member if it does not exist.
   /// \param key may contain embedded nulls.
-  Value& operator[](std::string_view key);
+  inline Value& operator[](std::string_view key) {
+    return resolveReference(key.data(), key.data() + key.length());
+  }
   /// Access an object value by name, returns null if there is no member with
   /// that name.
   /// \param key may contain embedded nulls.
-  const Value& operator[](std::string_view key) const;
+  inline const Value& operator[](std::string_view key) const {
+    Value const* found = find(key.data(), key.data() + key.length());
+    if (!found)
+      return nullSingleton();
+    return *found;
+  }
 #endif
   /// Access an object value by name, create a null member if it does not exist.
   /// \note Because of our implementation, keys are limited to 2^30 -1 chars.
@@ -532,7 +547,9 @@ public:
 #ifdef JSONCPP_HAS_STRING_VIEW
   /// Return the member named key if it exist, defaultValue otherwise.
   /// \note deep copy
-  Value get(std::string_view key, const Value& defaultValue) const;
+  inline Value get(std::string_view key, const Value& defaultValue) const {
+    return get(key.data(), key.data() + key.length(), defaultValue);
+  }
 #endif
   /// Return the member named key if it exist, defaultValue otherwise.
   /// \note deep copy
@@ -586,7 +603,9 @@ public:
   /// \pre type() is objectValue or nullValue
   /// \post type() is unchanged
 #if JSONCPP_HAS_STRING_VIEW
-  void removeMember(std::string_view key);
+  inline void removeMember(std::string_view key) {
+    removeMember(key.data(), key.data() + key.length(), nullptr);
+  }
 #endif
   void removeMember(const char* key);
   /// Same as removeMember(const char*)
@@ -599,7 +618,9 @@ public:
    *  \return true iff removed (no exceptions)
    */
 #if JSONCPP_HAS_STRING_VIEW
-  bool removeMember(std::string_view key, Value* removed);
+  inline bool removeMember(std::string_view key, Value* removed) {
+    return removeMember(key.data(), key.data() + key.length(), removed);
+  }
 #endif
   bool removeMember(String const& key, Value* removed);
   /// Same as removeMember(const char* begin, const char* end, Value* removed),
@@ -618,7 +639,9 @@ public:
 #ifdef JSONCPP_HAS_STRING_VIEW
   /// Return true if the object has a member named key.
   /// \param key may contain embedded nulls.
-  bool isMember(std::string_view key) const;
+  inline bool isMember(std::string_view key) const {
+    return isMember(key.data(), key.data() + key.length());
+  }
 #endif
   /// Return true if the object has a member named key.
   /// \note 'key' must be null-terminated.

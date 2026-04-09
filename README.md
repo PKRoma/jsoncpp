@@ -88,10 +88,15 @@ meson wrap install jsoncpp
 
 ### Amalgamated source
 
-> [!NOTE]
-> This approach may be outdated.
+For projects requiring a single-header approach, JsonCpp provides a script to generate an amalgamated source and header file.
 
-For projects requiring a single-header approach, see the [Wiki entry](https://github.com/open-source-parsers/jsoncpp/wiki/Amalgamated-(Possibly-outdated)).
+You can generate the amalgamated files by running the following Python script from the top-level directory:
+
+```sh
+python3 amalgamate.py
+```
+
+This will generate a `dist` directory containing `jsoncpp.cpp`, `json/json.h`, and `json/json-forwards.h`. You can then drop these files directly into your project's source tree and compile `jsoncpp.cpp` alongside your other source files.
 
 ## Documentation
 

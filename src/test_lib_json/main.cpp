@@ -4188,6 +4188,11 @@ JSONTEST_FIXTURE_LOCAL(VersionTest, VersionNumbersMatch) {
   JSONTEST_ASSERT_EQUAL(vstr.str(), std::string(JSONCPP_VERSION_STRING));
 }
 
+JSONTEST_FIXTURE_LOCAL(VersionTest, RuntimeVersionString) {
+  JSONTEST_ASSERT_EQUAL(std::string(JSONCPP_VERSION_STRING),
+                        std::string(Json::version()));
+}
+
 #if defined(__GNUC__)
 #pragma GCC diagnostic pop
 #endif

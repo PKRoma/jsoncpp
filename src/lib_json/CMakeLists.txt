@@ -7,7 +7,6 @@ include(CheckIncludeFileCXX)
 include(CheckTypeSize)
 include(CheckStructHasMember)
 include(CheckCXXSymbolExists)
-include(CheckCXXSourceCompiles)
 
 check_include_file_cxx(clocale HAVE_CLOCALE)
 check_cxx_symbol_exists(localeconv clocale HAVE_LOCALECONV)
@@ -25,11 +24,6 @@ if(NOT (HAVE_CLOCALE AND HAVE_LCONV_SIZE AND HAVE_DECIMAL_POINT AND HAVE_LOCALEC
         add_definitions(-DJSONCPP_NO_LOCALE_SUPPORT)
     endif()
 endif()
-
-check_cxx_source_compiles(
-    "#include <string_view>
-     int main() { std::string_view sv; return 0; }"
-    JSONCPP_HAS_STRING_VIEW)
 
 set(JSONCPP_INCLUDE_DIR ../../include)
 
